@@ -1,5 +1,5 @@
 # CS4364_Project
-Introduction:
+Introduction:\
 For the course project, we wish to construct a model with the goal of predicting the playoff match results and the eventual champion of the most recent FIFA World Cup based on the teams’ Round-robin tournament performances. We do believe a team’s routine performances can be a good indication of their playoff performances. With our model we hope to successfully predict the result of the matches, as well as identify the most important factors which affect a team’s playoff performance, and also allow us to analyze the reasoning behind unexpected upsets during the FIFA world cup.
 
 Our preliminary dataset is the match statistics of every single game in recent FIFA world cups. The dataset keeps track of over 20 different match statistics, including ball possession, goal attempts, free kicks, fouls committed, penalty shootout, etc. Our goal is to use these data from the qualification matches and matches during the group stage to construct a classifier model which can help us predict the result of playoff matches. 

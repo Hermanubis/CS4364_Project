@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
@@ -15,7 +17,7 @@ fifaDS =  pd.read_csv('FIFA18_Statistics.csv', na_values="not available")
 playoffDS =  pd.read_csv('FIFA18_Statistics.csv', na_values="not available")
 
 fifaDS.drop(fifaDS.tail(16).index, inplace = True)
-y = (fifaDS['Win'] == "Yes")
+y = (fifaDS['Win'])
 inputs = fifaDS.drop('Win', axis = 'columns')
 inputs = inputs.drop(['Date', 'Man of the Match', 'Round', 'PSO', 'Goals in PSO'], axis = 'columns')
 
@@ -24,10 +26,12 @@ numeric = [i for i in inputs.columns if inputs[i].dtype in [np.int64]]
 X = inputs[numeric]
 
 playoffDS.drop(playoffDS.head(112).index, inplace = True)
-y_test = (fifaDS['Win'] == "Yes")
+y_test = (playoffDS['Win'])
 # print(playoffDS)
 test_inputs = playoffDS.drop('Win', axis = 'columns')
 test_inputs = test_inputs.drop(['Date', 'Man of the Match', 'Round', 'PSO', 'Goals in PSO'], axis = 'columns')
+
+
 
 numeric_y = [i for i in test_inputs.columns if test_inputs[i].dtype in [np.int64]]
 # X = inputs.iloc[:, 1:]
@@ -61,3 +65,15 @@ y_pred = RandomForest.predict(X_test)
 randomForestScore = accuracy_score(y_test, y_pred)
 print("Accuracy Score: " + str(randomForestScore))
 
+model = LogisticRegression(max_iter = 50000)
+model.fit(X_train, y_train)
+trainScore = model.score(X_train, y_train)
+testScore = model.score(X_test, y_test)
+
+# y_pred = model.predict(test_inputs)
+# playoffScore = accuracy_score(y_test, y_pred)
+
+print("\nLogistic Regression: ")
+print("Train Score: " + str(trainScore))
+print("Test Score: " + ": " + str(testScore))
+# print("Prediction accuracy score: " + str(playoffScore))

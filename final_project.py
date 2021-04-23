@@ -12,6 +12,38 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 
+def group_stage(fifaDS):
+    fifaDS.drop(fifaDS.tail(16).index, inplace = True)
+    y = (fifaDS['Win'])
+    
+    inputs = fifaDS.drop('Win', axis = 'columns')
+
+    # Only grabbing data from the group stage at this point    
+    inputs = inputs[inputs['Round'] == 'Group Stage']
+    
+    # Dropping unnecessary columns    
+    inputs = inputs.drop(['Date', 'Man of the Match', 'Round', 'PSO', 'Goals in PSO', 'Own goals'], axis = 'columns')
+    
+    RandomForest = RandomForestClassifier(criterion="entropy")
+    RandomForest.fit(X_train, y_train)
+    featureImportance2 = RandomForest.feature_importances_
+    
+    # Rank features by their importance
+    rankedFeatures = []
+    
+    print("\nRandom Forest: ")
+    for i in range(len(featureImportance2)):
+        rankedFeatures.append((X.columns[i], featureImportance2[i]))
+        
+    rankedFeatures.sort(key=lambda x:x[1], reverse=True)
+    
+    for tup in rankedFeatures:
+        print("Feature: " + str(tup[0]) + " --- Importance: " + str(tup[1]))
+        
+    y_pred = RandomForest.predict(X_test)
+    randomForestScore = accuracy_score(y_test, y_pred)
+    print("Accuracy Score: " + str(randomForestScore))
+
 
 fifaDS =  pd.read_csv('FIFA18_Statistics.csv', na_values="not available")
 playoffDS =  pd.read_csv('FIFA18_Statistics.csv', na_values="not available")
@@ -32,7 +64,6 @@ test_inputs = playoffDS.drop('Win', axis = 'columns')
 test_inputs = test_inputs.drop(['Date', 'Man of the Match', 'Round', 'PSO', 'Goals in PSO'], axis = 'columns')
 
 
-
 numeric_y = [i for i in test_inputs.columns if test_inputs[i].dtype in [np.int64]]
 # X = inputs.iloc[:, 1:]
 x_test = test_inputs[numeric_y]
@@ -41,29 +72,18 @@ x_test = test_inputs[numeric_y]
 
 # X['team_new'] = le_team.fit_transform(X['Team'])
 
-corr = X.corr()
-plt.figure(figsize=(18, 15))
-sns.heatmap(corr, linewidths=0.01, square=True, annot=True, linecolor='Black')
-plt.title('Feature correlation heatmap')
+# corr = X.corr()
+# plt.figure(figsize=(18, 15))
+# sns.heatmap(corr, linewidths=0.01, square=True, annot=True, linecolor='Black')
+# plt.title('Feature correlation heatmap')
 
 X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.25,random_state=0)
+
+group_stage(fifaDS)
 
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
-
-
-RandomForest = RandomForestClassifier(criterion="entropy")
-RandomForest.fit(X_train, y_train)
-featureImportance2 = RandomForest.feature_importances_
-
-print("\nRandom Forest: ")
-for i in range(len(featureImportance2)):
-    print("Feature: " + str(X.columns[i]) + " --- Importance: " + str(featureImportance2[i]))
-
-y_pred = RandomForest.predict(X_test)
-randomForestScore = accuracy_score(y_test, y_pred)
-print("Accuracy Score: " + str(randomForestScore))
 
 model = LogisticRegression(max_iter = 50000)
 model.fit(X_train, y_train)

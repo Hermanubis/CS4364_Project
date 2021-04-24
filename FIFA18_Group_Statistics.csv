@@ -1,0 +1,33 @@
+Group,Team,Win,Draw,Lost,Score,Advance
+A,Uruguay,3,0,0,9,Yes
+A,Russia,2,0,1,6,Yes
+A,Saudi Arabia,1,0,2,3,No
+A,Egypt,0,0,3,0,No
+B,Spain,1,2,0,5,Yes
+B,Portugal,1,2,0,5,Yes
+B,Iran,1,1,1,4,No
+B,Morocco,0,1,2,1,No
+C,France,2,1,0,7,Yes
+C,Denmark,1,2,0,5,Yes
+C,Peru,1,0,2,3,No
+C,Australia,0,1,2,1,No
+D,Croatia,3,0,0,9,Yes
+D,Argentina,1,1,1,4,Yes
+D,Nigeria,1,0,2,3,No
+D,Iceland,0,1,2,1,No
+E,Brazil,2,1,0,7,Yes
+E,Switzerland,1,2,0,5,Yes
+E,Serbia,1,0,2,3,No
+E,Costa Rica,0,1,2,1,No
+F,Sweden,2,0,1,6,Yes
+F,Mexico,2,0,1,6,Yes
+F,South Korea,1,0,2,3,No
+F,Germany,1,0,2,3,No
+G,Belgium,3,0,0,9,Yes
+G,England,2,0,1,6,Yes
+G,Tunisia,1,0,2,3,No
+G,Panama,0,0,3,0,No
+H,Colombia,2,0,1,6,Yes
+H,Japan,1,1,1,4,Yes
+H,Senegal,1,1,1,4,No
+H,Poland,1,0,2,3,No

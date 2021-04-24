@@ -17,6 +17,8 @@ Rof16_win_weight = 0.8
 Rof16_lose_weight = 0.2
 QuarF_win_weight = 0.6
 QuarF_lose_weight = 0.4
+# QuarF_win_weight = 0.4
+# QuarF_lose_weight = 0.6
 
 def group_stage_proc(group_data, fifaGroupDS):      
     group_data = group_data.groupby('Team').sum()
@@ -102,7 +104,8 @@ def Rof16_Improve(Rof16_res, Rof16_data):
         
         team_score = Rof16_res[team]
         opponent_score = Rof16_res[opponent]
-        dif = abs(team_score - opponent_score)
+        # dif = abs(team_score - opponent_score)
+        dif = (team_score + opponent_score) / 2
         
         # Team defeat opponent
         if(result == 'Yes'):
@@ -135,7 +138,8 @@ def QuarF_Improve(Rof16_improved, QuarF_data):
         
         team_score = Rof16_improved[team]
         opponent_score = Rof16_improved[opponent]
-        dif = abs(team_score - opponent_score)
+        # dif = abs(team_score - opponent_score)
+        dif = (team_score + opponent_score) / 2
         
         # Team defeat opponent
         if(result == 'Yes'):

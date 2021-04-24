@@ -13,6 +13,11 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 
+Rof16_win_weight = 0.8
+Rof16_lose_weight = 0.2
+QuarF_win_weight = 0.6
+QuarF_lose_weight = 0.4
+
 def group_stage_proc(group_data, fifaGroupDS):      
     group_data = group_data.groupby('Team').sum()
     
@@ -102,18 +107,18 @@ def Rof16_Improve(Rof16_res, Rof16_data):
         # Team defeat opponent
         if(result == 'Yes'):
             if(team_score > opponent_score):
-                Rof16_improved[team] = team_score + dif * 0.2
-                Rof16_improved[opponent] = opponent_score - dif * 0.2
+                Rof16_improved[team] = team_score + dif * Rof16_lose_weight
+                Rof16_improved[opponent] = opponent_score - dif * Rof16_lose_weight
             else:
-                Rof16_improved[team] = team_score + dif * 0.8
-                Rof16_improved[opponent] = opponent_score - dif * 0.8
+                Rof16_improved[team] = team_score + dif * Rof16_win_weight
+                Rof16_improved[opponent] = opponent_score - dif * Rof16_win_weight
         else:
             if(team_score > opponent_score):
-                Rof16_improved[team] = team_score - dif * 0.8
-                Rof16_improved[opponent] = opponent_score + dif * 0.8
+                Rof16_improved[team] = team_score - dif * Rof16_win_weight
+                Rof16_improved[opponent] = opponent_score + dif * Rof16_win_weight
             else:
-                Rof16_improved[team] = team_score - dif * 0.2
-                Rof16_improved[opponent] = opponent_score + dif * 0.2
+                Rof16_improved[team] = team_score - dif * Rof16_lose_weight
+                Rof16_improved[opponent] = opponent_score + dif * Rof16_lose_weight
     
     pprint.pprint(Rof16_improved)
     
@@ -135,18 +140,18 @@ def QuarF_Improve(Rof16_improved, QuarF_data):
         # Team defeat opponent
         if(result == 'Yes'):
             if(team_score > opponent_score):
-                QuarF_improved[team] = team_score + dif * 0.4
-                QuarF_improved[opponent] = opponent_score - dif * 0.4
+                QuarF_improved[team] = team_score + dif * QuarF_lose_weight
+                QuarF_improved[opponent] = opponent_score - dif * QuarF_lose_weight
             else:
-                QuarF_improved[team] = team_score + dif * 0.6
-                QuarF_improved[opponent] = opponent_score - dif * 0.6
+                QuarF_improved[team] = team_score + dif * QuarF_win_weight
+                QuarF_improved[opponent] = opponent_score - dif * QuarF_win_weight
         else:
             if(team_score > opponent_score):
-                QuarF_improved[team] = team_score - dif * 0.6
-                QuarF_improved[opponent] = opponent_score + dif * 0.6
+                QuarF_improved[team] = team_score - dif * QuarF_win_weight
+                QuarF_improved[opponent] = opponent_score + dif * QuarF_win_weight
             else:
-                QuarF_improved[team] = team_score - dif * 0.4
-                QuarF_improved[opponent] = opponent_score + dif * 0.4
+                QuarF_improved[team] = team_score - dif * QuarF_lose_weight
+                QuarF_improved[opponent] = opponent_score + dif * QuarF_lose_weight
     
     pprint.pprint(QuarF_improved)
     

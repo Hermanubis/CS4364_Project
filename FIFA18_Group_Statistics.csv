@@ -1,4 +1,4 @@
-Group,Team,Win,Draw,Lost,Score,Advance
+Group,Team,GroupWin,GroupDraw,GroupLost,GroupScore,Advance
 A,Uruguay,3,0,0,9,Yes
 A,Russia,2,0,1,6,Yes
 A,Saudi Arabia,1,0,2,3,No

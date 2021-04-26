@@ -53,8 +53,19 @@ def group_stage_proc(group_data, fifaGroupDS):
         fea_importance_ranked.append((X.columns[i], featureImportance2[i]))
     
     fea_importance_ranked.sort(key=lambda x:x[1], reverse=True)
+    x_axis = []
+    y_axis = []
     for tup in fea_importance_ranked:
         print("Feature: " + str(tup[0]) + " --- Importance: " + str(tup[1]))
+        x_axis.append(tup[0])
+        y_axis.append(tup[1])
+        
+    plt.bar(x_axis, y_axis)    
+    plt.title('Feature Importance Bar Chart')
+    plt.xlabel('Name of Feature')
+    plt.ylabel('Importance Score')
+    plt.xticks(rotation=90)
+    plt.show()
     
     return fea_importance_ranked
     
@@ -65,6 +76,9 @@ def Rof16_stage_proc(Rof16_data, group_res):
     
     Rof16_res = {}
     
+    teams = []
+    scores = []
+    
     for i, row in Rof16_data.iterrows():
         temp_res = 0
         #Using feature importance as weight to compute team rating
@@ -74,6 +88,8 @@ def Rof16_stage_proc(Rof16_data, group_res):
             
             temp_res += row[feature_name] * feature_impo
         Rof16_res[row.name] = temp_res
+        teams.append(row.name)
+        scores.append(temp_res)
     
     #Ratings after group stage         
     pprint.pprint(Rof16_res)
@@ -189,6 +205,38 @@ Rof16_improved = Rof16_Improve(Rof16_res, Rof16_data)
 print('\nTeam Ratings After Quarter Finals:')
 
 QuarF_improved = QuarF_Improve(Rof16_improved, QuarF_data)
+
+teams = []
+Rof16Scores = []
+Rof16ImprovedScores = []
+
+for key in Rof16_res.keys():
+    teams.append(key)
+    Rof16Scores.append(Rof16_res[key])
+    Rof16ImprovedScores.append(Rof16_improved[key])
+    
+plt.plot(teams, Rof16Scores, 'r-', label="Group Stage Scores")
+plt.plot(teams, Rof16ImprovedScores, 'b-', label="Round of 16 Scores")
+
+plt.title('Scores of Each National Team')
+plt.xlabel('Name of Teams')
+plt.ylabel('Calculated Scores')
+plt.legend(loc=4, fontsize=10)    
+plt.xticks(rotation=90)
+
+plt.show()
+
+plt.plot(QuarF_improved.keys(), QuarF_improved.values(), 'og-', label="Quarter Final Scores")
+for key in QuarF_improved.keys():
+    plt.annotate(str(QuarF_improved[key])[:6], (key, QuarF_improved[key]))
+
+plt.title('Scores of Each National Team')
+plt.xlabel('Name of Teams')
+plt.ylabel('Calculated Scores')
+plt.legend(loc=3, fontsize=10)    
+plt.xticks(rotation=90)
+
+plt.show()
 
 sorted_values = sorted(QuarF_improved.values(),reverse = True) 
 sorted_team = {}

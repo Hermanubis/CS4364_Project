@@ -12,12 +12,11 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 
-Rof16_win_weight = 0.9
-Rof16_lose_weight = 0.1
+Rof16_win_weight = 0.6
+Rof16_lose_weight = 0.4
 QuarF_win_weight = 0.6
 QuarF_lose_weight = 0.4
-# QuarF_win_weight = 0.4
-# QuarF_lose_weight = 0.6
+
 
 def group_stage_proc(group_data, fifaGroupDS):      
     group_data = group_data.groupby('Team').sum()
@@ -247,7 +246,7 @@ for i in sorted_values:
             sorted_team[j] = QuarF_improved[j]
             break
 
-print("\n Predicted Final Rannking: ")
+print("\n Predicted Final Ranking: ")
 rank = 1        
 for ranking in sorted_team:
     print(" Top " + str(rank) + ": " + ranking)
